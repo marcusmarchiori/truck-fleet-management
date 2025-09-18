@@ -5,7 +5,6 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aspectj.bridge.IMessage;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Truck {
+public class TruckEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +24,7 @@ public class Truck {
 
     @Column(name = "license_plate", nullable = false, unique = true, length = 10)
     @NotBlank(message = "Placa é obrigatória")
-    @Size(max = 7, message = "Deve-se ter 7 caracteres no máximos")
+    @Size(max = 10, message = "Deve-se ter 10 caracteres no máximos")
     private String licensePlate;
 
     @Column(name = "brand", nullable = false, length = 50)
@@ -44,7 +43,7 @@ public class Truck {
     private Integer manufacturingYear;
 
     @Column(name = "fipe_price", precision = 12, scale = 2)
-    @DecimalMin(value = "0.0", inclusive = false, message = "Preço deve ser maior que zero")
+    @DecimalMin(value = "0.0", message = "Preço deve ser maior que zero")
     private BigDecimal fipePrice;
 
     @CreationTimestamp
@@ -55,7 +54,7 @@ public class Truck {
     @Column(name = "updated_date", nullable = false)
     private LocalDateTime updatedDate;
 
-    public Truck(String licensePlate, String brand, String model, Integer manufacturingYear) {
+    public TruckEntity(String licensePlate, String brand, String model, Integer manufacturingYear) {
         this.licensePlate = licensePlate;
         this.brand = brand;
         this.model = model;

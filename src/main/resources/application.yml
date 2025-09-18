@@ -24,6 +24,11 @@ spring:
   application:
     name: truck-fleet-management
 
+fipe:
+  api:
+    base:
+      url: https://parallelum.com.br/fipe/api/v1/caminhoes
+
 logging:
   level:
     org.springframework.web: DEBUG
