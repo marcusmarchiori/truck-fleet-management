@@ -1,0 +1,50 @@
+<form [formGroup]="truckForm" (ngSubmit)="onSubmit()" class="truck-form">
+  <h2>{{ isEditMode ? 'Editar Caminhão' : 'Cadastrar Caminhão' }}</h2>
+
+  <div class="field">
+    <label for="licensePlate">Placa</label>
+    <input id="licensePlate" type="text" formControlName="licensePlate" />
+  </div>
+
+  <div class="field">
+    <label for="brand">Marca</label>
+    <select id="brand" formControlName="brand">
+      <option value="">Selecione</option>
+      <option *ngFor="let b of brands" [value]="b.codigo">{{ b.nome }}</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="model">Modelo</label>
+    <select id="model" formControlName="model" [disabled]="!models.length">
+      <option value="">Selecione</option>
+      <option *ngFor="let m of models" [value]="m.codigo">{{ m.nome }}</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="yearCode">Ano</label>
+    <select id="yearCode" formControlName="yearCode" [disabled]="!years.length">
+      <option value="">Selecione</option>
+      <option *ngFor="let y of years" [value]="y.codigo">{{ y.nome }}</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="manufacturingYear">Ano de fabricação</label>
+    <input id="manufacturingYear" type="number" formControlName="manufacturingYear" readonly />
+  </div>
+
+  <div class="price" *ngIf="fipePrice !== null">
+    <strong>Preço FIPE:</strong> {{ fipePrice | currency:'BRL':'symbol-narrow' }}
+  </div>
+
+  <div class="actions">
+    <button type="submit" [disabled]="truckForm.invalid || isLoading">
+      {{ isEditMode ? 'Atualizar' : 'Salvar' }}
+    </button>
+    <a routerLink="/trucks" class="btn-secondary">Cancelar</a>
+  </div>
+
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+</form>
