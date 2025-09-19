@@ -40,13 +40,11 @@ export class TruckFormComponent implements OnInit {
       manufacturingYear: [{ value: '', disabled: true }]
     });
 
-    // Carregar marcas
     this.truckService.getBrands().subscribe({
       next: (data: FipeOption[]) => ( this.brands = data || []),
       error: (err) => console.error('Erro ao carregar marcas', err)
     });
 
-    // Reagir à troca de marca
     const brandCtrl = this.truckForm.get('brand')!;
     brandCtrl.valueChanges.subscribe((brandCode: string) => {
       this.models = [];
@@ -65,7 +63,6 @@ export class TruckFormComponent implements OnInit {
       });
     });
 
-    // Reagir à troca de modelo
     const modelCtrl = this.truckForm.get('model')!;
     modelCtrl.valueChanges.subscribe((modelCode: string) => {
       this.years = [];
@@ -87,7 +84,6 @@ export class TruckFormComponent implements OnInit {
       });
     });
 
-    // Reagir à troca de ano
     const yearCtrl = this.truckForm.get('yearCode')!;
     yearCtrl.valueChanges.subscribe((yearCode: string) => {
       this.fipePrice = null;
@@ -110,7 +106,6 @@ export class TruckFormComponent implements OnInit {
       });
     });
 
-    // Editar
     this.truckId = Number(this.route.snapshot.paramMap.get('id'));
     if (!Number.isNaN(this.truckId) && this.truckId > 0) {
       this.isEditMode = true;

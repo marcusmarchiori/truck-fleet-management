@@ -1,1 +1,86 @@
-/* You can add global styles to this file, and also import other style files */
+:root{
+  --bg:#f7f8fb;
+  --surface:#fff;
+  --text:#111827;
+  --muted:#6b7280;
+  --border:#e6e8ec;
+  --primary:#2563eb;
+  --primary-600:#1d4ed8;
+  --shadow:0 10px 25px rgba(16,24,40,.05),0 2px 6px rgba(16,24,40,.06);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:400 16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+} 
+
+.page{max-width:1100px;margin:24px auto;padding:0 16px}
+h1,h2{margin:0 0 16px}
+h1{font-size:28px}
+h2{font-size:24px}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px;
+}
+
+.actions{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.actions .right{display:flex;gap:10px}
+
+button,.btn{
+  appearance:none;border:0;cursor:pointer;
+  background:var(--primary);color:#fff;
+  padding:10px 14px;border-radius:10px;font-weight:600;
+  transition:background .15s ease, transform .03s ease;
+}
+
+button:hover,.btn:hover{background:var(--primary-600)}
+button:active,.btn:active{transform:translateY(1px)}
+button[disabled]{background:#cbd5e1;cursor:not-allowed}
+
+.btn-secondary{background:#fff;color:#2563eb;border:1px solid #2563eb;border-radius:10px;padding:9px 13px}
+.btn-secondary:hover{background:#eff6ff}
+
+.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}
+label{font-weight:600}
+input[type="text"],input[type="number"],select,textarea{
+  border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);
+  padding:10px 12px;width:100%;transition:border-color .15s, box-shadow .15s;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.2)}
+input[readonly],input:disabled,select:disabled{background:#f3f4f6;color:#6b7280;cursor:not-allowed}
+.error-message{color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;padding:10px 12px;border-radius:10px;margin-top:12px}
+.price{margin:10px 0;font-weight:600}
+
+.grid{display:grid;gap:12px}
+.grid-2{grid-template-columns:1fr 1fr}
+@media (max-width: 760px){
+  .grid-2{grid-template-columns:1fr}
+}
+.table-wrap{overflow:auto;margin-top:12px}
+.table{
+  width:100%;border-collapse:separate;border-spacing:0;
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.table thead th{
+  background:#f8fafc;font-weight:700;text-align:left;
+  padding:14px;border-bottom:1px solid var(--border);white-space:nowrap;
+  position:sticky;top:0;z-index:1;
+}
+.table td{padding:12px 14px;border-bottom:1px solid var(--border)}
+.table tbody tr:nth-child(even){background:#fcfcfd}
+.table tbody tr:hover{background:#f6f8ff}
+
+@media (max-width: 760px){
+  .actions{flex-direction:column;align-items:flex-start;gap:8px}
+  .table thead th,.table td{padding:10px}
+  h1{font-size:24px} h2{font-size:20px}
+}
