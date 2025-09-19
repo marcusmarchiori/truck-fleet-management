@@ -2,9 +2,29 @@
   <div class="card">
     <h1>{{ isEditMode ? 'Editar Caminhão' : 'Cadastrar Caminhão' }}</h1>
 
-    <div class="field">
+    <div class="field" *ngIf="truckForm.get('licensePlate') as plate">
       <label for="licensePlate">Placa</label>
-      <input id="licensePlate" type="text" formControlName="licensePlate" />
+      <input
+        id="licensePlate"
+        type="text"
+        formControlName="licensePlate"
+        maxlength="7"
+        autocomplete="off"
+        inputmode="latin-prose"
+        aria-describedby="plateHelp plateError"
+      />
+      <small id="plateHelp" class="hint">
+        Formatos aceitos: <strong>ABC1234</strong> (antigo) ou <strong>ABC1D23</strong> (Mercosul).
+      </small>
+      <div id="plateError" class="error" *ngIf="plate.invalid && (plate.dirty || plate.touched)">
+        <span *ngIf="plate.errors?.['required']">Placa é obrigatória.</span>
+        <span *ngIf="plate.errors?.['minlength'] || plate.errors?.['maxlength']">
+          A placa deve conter exatamente 7 caracteres.
+        </span>
+        <span *ngIf="plate.errors?.['pattern']">
+          Use <strong>ABC1234</strong> ou <strong>ABC1D23</strong>.
+        </span>
+      </div>
     </div>
 
     <div class="grid grid-2">

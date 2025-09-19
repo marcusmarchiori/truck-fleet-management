@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TruckService, Truck, FipeOption, FipePriceResponse } from '../services/truck';
 
+const PLATE_REGEX = /^(?:[A-Z]{3}\d{4}|[A-Z]{3}\d[A-Z]\d{2})$/;
+
 @Component({
   selector: 'app-truck-form',
   templateUrl: './truck-form.html',
@@ -33,11 +35,19 @@ export class TruckFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.truckForm = this.fb.group({
-      licensePlate: ['', [Validators.required, Validators.maxLength(10)]],
-      brand: ['', Validators.required],      // code
-      model: ['', Validators.required],      // code
-      yearCode: ['', Validators.required],   // code "2013-1"
+      licensePlate: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(7), Validators.pattern(PLATE_REGEX)]],
+      brand: ['', Validators.required],
+      model: ['', Validators.required],
+      yearCode: ['', Validators.required],
       manufacturingYear: [{ value: '', disabled: true }]
+    });
+
+    this.truckForm.get('licensePlate')!.valueChanges.subscribe(v => {
+      if (typeof v !== 'string') return;
+      const norm = v.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 7);
+      if (norm !== v) {
+        this.truckForm.get('licensePlate')!.setValue(norm, { emitEvent: false });
+      }
     });
 
     this.truckService.getBrands().subscribe({
@@ -173,7 +183,7 @@ export class TruckFormComponent implements OnInit {
 
   private extractYearNumber(name: string): number | '' {
     const y = parseInt((name || '').split('-')[0], 10);
-    if (!isNaN(y) && y !== 32000) return y; 
+    if (!isNaN(y) && y !== 32000) return y;
     return '';
   }
 
